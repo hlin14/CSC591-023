@@ -100,19 +100,36 @@ def rows(src):
 
 
 def cols(src):
-    """ If a column name on row1 contains '?', 
-  then skip over that column."""
-    pass
+    """ If a column name on row1 contains '?', then skip over that column."""
+    for i in range(len(src)):
+        src[i] = src[i].split(",")
+
+    delete_item = []
+    for i, item in enumerate(src[0]):
+        if item[0] == '?':
+            delete_item.append(i)
+    for row in src:
+        for delete_index in delete_item:
+            del row[delete_index]
+
+    return src
 
 
 def prep(src):
     """ If a column name on row1 contains '$', 
   coerce strings in that column to a float."""
-    pass
+    float_item = []
+    for i, item in enumerate(src[0]):
+        if item[0] == '$':
+            float_item.append(i)
+    for row in src[1:]:
+        for float_index in float_item:
+            row[float_index] = float(row[float_index])
+    return src
 
 def ok0(s):
 
-    for row in rows(lines(s)):
+    for row in prep(cols(rows(lines(s)))):
         print(row)
 
 @O.k
