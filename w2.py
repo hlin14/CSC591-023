@@ -70,8 +70,7 @@ def lines(s):
 def rows(src):
     """Kill bad characters. If line ends in ',' 
    then join to next. Skip blank lines."""
-    #Skip blank lines and blank space
-    i = 0
+    #Skip blank lines and blank space and comment
     delete_list = []
     for i in range(len(src)):
         if '#' in src[i]:
