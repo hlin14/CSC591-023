@@ -74,6 +74,10 @@ def rows(src):
     i = 0
     delete_list = []
     for i in range(len(src)):
+        if '#' in src[i]:
+            index = src[i].index("#")
+            #print(index)
+            src[i] = src[i][:index]
         src[i] = src[i].strip()
         # print(src[i])
         if src[i] == '':
@@ -83,13 +87,13 @@ def rows(src):
         del src[index]
     
     #If line ends in ',' then join to next
-    delete_list = []
-    for i in range(len(src)):
+    i = 0
+    while i < len(src):
         if src[i].endswith(','):
             src[i] = src[i] + src[i + 1]
-            delete_list.append(i+1)
-    for index in reversed(delete_list):
-        del src[index]
+            del src[i + 1]
+            i -= 1
+        i += 1
 
     return src
 
@@ -107,8 +111,8 @@ def prep(src):
     pass
 
 def ok0(s):
-    
-    for row in prep(cols(rows(lines(s)))):
+
+    for row in rows(lines(s)):
         print(row)
 
 @O.k
